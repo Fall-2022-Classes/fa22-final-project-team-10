@@ -21,7 +21,6 @@
 //////
 
 
-
 ////////////////Final Project///////////////////
 void ps2_move(Ps2Core *ps2_p, SpriteCore *ghost_p) {
    int id;
@@ -491,13 +490,17 @@ void sprite_target(SpriteCore *ghost_p, OsdCore *osd_p){
 	      //sleep_ms(10);
 	      if( i%step == 0){
 	    	  x = x + 1;
-		      uart.disp("\r\n");
-		      uart.disp(x);
 	      }
 
-	      if((tap_sensor(&spi, &led)>0.3)&& (1)){
+	      if((tap_sensor(&spi, &led)>0.3)&& ( x < 215 && x > 205)){ //first target acceptable tile range each 10 pixel wide
 	    	  hit_target += 1;
-	    	  sleep_ms(10);
+//	    	  sleep_ms(10);
+	      }
+	      if((tap_sensor(&spi, &led)>0.3)&& ( x < 355 && x > 365)){ //second target acceptable tile range
+	    	  hit_target += 1;
+	      }
+	      if((tap_sensor(&spi, &led)>0.3)&& ( x < 455 && x > 465)){ //third target acceptable tile range
+	    	  hit_target += 1;
 	      }
 	   }
 
@@ -517,9 +520,16 @@ void sprite_target(SpriteCore *ghost_p, OsdCore *osd_p){
 	   	      }
 
 
-	   	      if(tap_sensor(&spi, &led)>0.01){
-	   	    	  hit_target += 1;
-	   	      }
+	   	   if((tap_sensor(&spi, &led)>0.3)&& ( x < 215 && x > 205)){ //first target acceptable tile range each 10 pixel wide
+	   	  	    	  hit_target += 1;
+	   	  //	    	  sleep_ms(10);
+	   	  	      }
+	   	   if((tap_sensor(&spi, &led)>0.3)&& ( x < 355 && x > 365)){ //second target acceptable tile range
+	   	  	    	  hit_target += 1;
+	   	  	      }
+	   	   if((tap_sensor(&spi, &led)>0.3)&& ( x < 455 && x > 465)){ //third target acceptable tile range
+	   	  	    	  hit_target += 1;
+	   	  	      }
 	   	   }
 
 	   osd_p->wr_char(30, 19, 64, 1);
@@ -538,9 +548,16 @@ void sprite_target(SpriteCore *ghost_p, OsdCore *osd_p){
 	   	      }
 
 
-	   	      if(tap_sensor(&spi, &led)>0.01){
-	   	    	  hit_target += 1;
-	   	      }
+	   	   if((tap_sensor(&spi, &led)>0.3)&& ( x < 215 && x > 205)){ //first target acceptable tile range each 10 pixel wide
+	   	  	     hit_target += 1;
+	   	  //	    	  sleep_ms(10);
+	   	  	   }
+	   	   if((tap_sensor(&spi, &led)>0.3)&& ( x < 355 && x > 365)){ //second target acceptable tile range
+	   	  	    	  hit_target += 1;
+	   	  	      }
+	   	   if((tap_sensor(&spi, &led)>0.3)&& ( x < 455 && x > 465)){ //third target acceptable tile range
+	   	  	    	  hit_target += 1;
+	   	  	      }
 	   	   }
 
 	   uart.disp("\r\nTargets Hit: ");
@@ -572,7 +589,8 @@ int main(){
 	screen_fill(&osd, 0x000);
 //	displaySeg(&sseg, 0);
 	while(1){
-		mode(sw.read(0), sw.read(1), sw.read(2), &ps2);
+//		mode(sw.read(0), sw.read(1), sw.read(2), &ps2);
 //		ps2_check(&ps2, &ghost);
+		osd_check( &osd);
 	}
 }
